@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.venv
+env/
+venv/
+dist/
+build/
+*.spec
+.DS_Store
+newsclipping.log
+*.iss

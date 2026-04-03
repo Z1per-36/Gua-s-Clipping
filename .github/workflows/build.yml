@@ -1,0 +1,43 @@
+name: Build Executables
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [created]
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller --noconsole --onefile --clean --name "NewsClippingTool" --collect-all customtkinter --hidden-import plyer.platforms.win.notification --hidden-import plyer.platforms.macosx.notification main.py
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: NewsClippingTool-${{ matrix.os }}
+        path: |
+          dist/NewsClippingTool.exe
+          dist/NewsClippingTool

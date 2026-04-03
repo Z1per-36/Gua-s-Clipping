@@ -1,0 +1,28 @@
+schedule:
+  send_times:
+  - 08:00
+  - '18:00'
+  timezone: Asia/Taipei
+keywords:
+- AI
+- 半導體
+categories:
+- technology
+- business
+sources:
+  google_news:
+    enabled: true
+    language: zh-TW
+    region: TW
+  rss_feeds:
+    enabled: true
+    urls:
+    - https://feeds.feedburner.com/TechCrunch/
+    - https://www.ithome.com.tw/rss
+  reddit:
+    enabled: true
+    subreddits:
+    - technology
+    - worldnews
+max_articles_per_source: 10
+max_summary_length: 200
