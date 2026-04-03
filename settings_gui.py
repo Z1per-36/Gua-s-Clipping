@@ -172,14 +172,15 @@ class SettingsGUI:
         self._root.title(t("ui_title", self._lang))
         
         window_width = 620
-        window_height = 840
+        window_height = 600
         screen_width = self._root.winfo_screenwidth()
         screen_height = self._root.winfo_screenheight()
         pos_x = (screen_width // 2) - (window_width // 2)
         pos_y = (screen_height // 2) - (window_height // 2)
         
         self._root.geometry(f"{window_width}x{window_height}+{pos_x}+{pos_y}")
-        self._root.resizable(False, False)
+        self._root.resizable(True, True)
+        self._root.minsize(550, 500)
 
         # Fix: pack btn_frame bottom first so it never gets cropped out!
         self._btn_frame = ctk.CTkFrame(self._root, fg_color="transparent")
