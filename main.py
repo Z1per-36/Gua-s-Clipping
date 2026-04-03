@@ -81,10 +81,13 @@ def main() -> None:
 
     def _open_settings_via_subprocess():
         # Spawn ourselves to enter UI mode safely on any OS
-        if getattr(sys, 'frozen', False):
-            subprocess.Popen([sys.executable])
-        else:
-            subprocess.Popen([sys.executable, os.path.abspath(sys.argv[0])])
+        try:
+            if getattr(sys, 'frozen', False):
+                subprocess.Popen([sys.executable], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            else:
+                subprocess.Popen([sys.executable, os.path.abspath(sys.argv[0])], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except Exception as e:
+            log.error("Failed to spawn UI: %s", e)
 
     # First run check
     if not cfg.get("keywords") and len(cfg.get("categories", [])) <= 1:
